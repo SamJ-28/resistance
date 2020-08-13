@@ -2,6 +2,8 @@
 #' 
 #' allows calling from runModel2() and independently 
 
+#  Edits being made to fitnessgenotype() by Sam Jones from Aug 2011 to permit modelling of micro-mosaics
+
 #' @param a_fitnic array of niche fitnesses
 #' @param a_expos array of exposure in each niche
 #' @param a_fitgen array of individual fitnesses to fill
@@ -47,8 +49,11 @@ fitnessGenotype <- function ( a_fitnic = NULL,
                               exposure = 0.5,
                               exp1 = NULL,
                               exp2 = NULL,
-                              plot = FALSE )
+                              plot = TRUE,
+                              rho)
 {
+  
+  print("github check")
   
   # to allow this function to be called with no args
   if ( is.null(a_fitnic) )
@@ -79,6 +84,10 @@ fitnessGenotype <- function ( a_fitnic = NULL,
     a_fitgen  <- array_named( sex=c('m','f'), locus1 = c('SS1','RS1','RR1'), locus2 = c('SS2','RS2','RR2') )
   }
 
+  # Add "multiple feeds" and rho for testing
+  multiple_feeds = 0
+  rho = 0.5
+  
   #testing
   # cat("in fitnessGenotype\n")
   # df_niche <- as.data.frame( aperm( a_fitnic[,,c('A'),c('B','0')], c('niche2','locus1','locus2')) )
@@ -95,7 +104,18 @@ fitnessGenotype <- function ( a_fitnic = NULL,
       {
         # multiplies exposure by fitness for all niches & then sums
         # creates a weighted average of exposure in each niche
-        a_fitgen[sex,locus1,locus2] <- sum( a_expos[sex,,] * a_fitnic[locus1,locus2,,])
+        
+        # Original code
+        # a_fitgen[sex,locus1,locus2] <- sum( a_expos[sex,,] * a_fitnic[locus1,locus2,,])
+        
+        # Ian's suggested code:
+        xx<- sum( a_expos[sex,,] * a_fitnic[locus1,locus2,,])
+        
+        # Reworked to ifelse() 
+        ifelse(multiple_feeds==0, a_fitgen[sex,locus1,locus2] <- xx, a_fitgen[sex,locus1,locus2] <- (xx*rho)/(1-xx*rho))
+        
+        # To do: Error message? 
+        
       }
     }
   }

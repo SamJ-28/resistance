@@ -1,3 +1,8 @@
+
+# Additional code being comitted by Sam Jones from 11th August 2020 for modelling micro-mosaics: 
+
+# 
+
 #' run the model scenarios specified in the input object (refactored)
 #' 
 #' refactored version starting to use genotype and niche arrays to reduce code volume
@@ -21,7 +26,13 @@
 runModel2 <- function(input = NULL,
                      produce.plots = FALSE,
                      savePlots=FALSE){
- 
+  
+  # Include rho as an input 
+  # Where rho is the probability of surviving death by natural causes during the feeding cycle of a mosquito.
+  # rho is being included for micro-mosaic work to allow modelling of a mosquito surviving a single insecticide and thus, being able to encounter another.
+  
+  rho <- 0.5
+  
   # to allow default run
   if (is.null(input)) input <- setInputOneScenario()
   
@@ -168,7 +179,7 @@ runModel2 <- function(input = NULL,
                               a_fitnic = a_fitnic )
     
     ## fitness of each genotype by sex
-    a_fitgen <- fitnessGenotype( a_fitnic = a_fitnic, a_expos = a_expos, a_fitgen = a_fitgen )
+    a_fitgen <- fitnessGenotype( a_fitnic = a_fitnic, a_expos = a_expos, a_fitgen = a_fitgen, rho )
  
     #testing
     # print("testing indiv fitness for exposure:")
