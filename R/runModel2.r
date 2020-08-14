@@ -24,7 +24,8 @@
 #' @export
 
 # Source fitness genotype2() locally until Andy gets back re. pulling from github 
-source("F:/gitHub/resistance/R/fitnessGenotype2.R")
+# Cancel the source, testing github... 
+# source("F:/gitHub/resistance/R/fitnessGenotype2.R")
 
 runModel2 <- function(input = NULL,
                      produce.plots = FALSE,
