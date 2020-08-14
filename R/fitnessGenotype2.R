@@ -3,6 +3,7 @@
 #' allows calling from runModel2() and independently 
 
 #  Edits being made to fitnessgenotype() by Sam Jones from Aug 2011 to permit modelling of micro-mosaics
+#  Fitness genotype 2 is currently a seperate file for easier local working
 
 #' @param a_fitnic array of niche fitnesses
 #' @param a_expos array of exposure in each niche
@@ -50,7 +51,7 @@ fitnessGenotype2 <- function ( a_fitnic = NULL,
                               exp1 = NULL,
                               exp2 = NULL,
                               plot = TRUE,
-                              rho)
+                              rho_param)
 {
   
   print("github check")
@@ -85,8 +86,10 @@ fitnessGenotype2 <- function ( a_fitnic = NULL,
   }
 
   # Add "multiple feeds" and rho for testing
-  multiple_feeds = 0
-  rho = 0.5
+  # Rho pulled from argument
+  rho = rho_param
+  multiple_feeds = 1
+  
   
   #testing
   # cat("in fitnessGenotype\n")

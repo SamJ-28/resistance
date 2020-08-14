@@ -23,6 +23,9 @@
 #' @return a list of 3 lists of one or more scenarios: results, genotype and fitness. e.g. listOut$results[1] gives a results matrix for the first scenario
 #' @export
 
+# Source fitness genotype2() locally until Andy gets back re. pulling from github 
+source("F:/gitHub/resistance/R/fitnessGenotype2.R")
+
 runModel2 <- function(input = NULL,
                      produce.plots = FALSE,
                      savePlots=FALSE){
@@ -31,7 +34,7 @@ runModel2 <- function(input = NULL,
   # Where rho is the probability of surviving death by natural causes during the feeding cycle of a mosquito.
   # rho is being included for micro-mosaic work to allow modelling of a mosquito surviving a single insecticide and thus, being able to encounter another.
   
-  rho <- 0.5
+  rho <- 0.6
   
   # to allow default run
   if (is.null(input)) input <- setInputOneScenario()
@@ -179,7 +182,7 @@ runModel2 <- function(input = NULL,
                               a_fitnic = a_fitnic )
     
     ## fitness of each genotype by sex
-    a_fitgen <- fitnessGenotype( a_fitnic = a_fitnic, a_expos = a_expos, a_fitgen = a_fitgen, rho )
+    a_fitgen <- fitnessGenotype2( a_fitnic = a_fitnic, a_expos = a_expos, a_fitgen = a_fitgen, rho_param = rho )
  
     #testing
     # print("testing indiv fitness for exposure:")
