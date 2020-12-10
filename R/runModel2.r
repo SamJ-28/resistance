@@ -35,7 +35,7 @@ runModel2 <- function(input = NULL,
   # Where rho is the probability of surviving death by natural causes during the feeding cycle of a mosquito.
   # rho is being included for micro-mosaic work to allow modelling of a mosquito surviving a single insecticide and thus, being able to encounter another.
   
-  rho <- 0.6
+  
   
   # to allow default run
   if (is.null(input)) input <- setInputOneScenario()
@@ -133,6 +133,8 @@ runModel2 <- function(input = NULL,
     a_nichetog['A','b'] <- input[51,scen_num]
     a_nichetog['a','B'] <- input[52,scen_num]
     
+    # Rho parameter:
+    rho <- input[59, scen_num]
     #andy to read new sexLinked parameter, if not present set to FALSE
     sexLinked <- FALSE
     if (nrow(input) > 52)
@@ -242,7 +244,7 @@ runModel2 <- function(input = NULL,
     listOut$fitness[[scen_num]] <- fitnessOutput( a_fitnic )    
     
     #25/10/16 adding output of fitness by genotype and generation
-    listOut$fit_time_genotype <- fit_time_genotype(genotype, a_fitgen)
+    listOut$fit_time_genotype[[scen_num]] <- fit_time_genotype(genotype, a_fitgen)
     
     ## Plots
     if( produce.plots ) plot_outputs_all( listOut=listOut, scen_num=scen_num, savePlots=savePlots)
