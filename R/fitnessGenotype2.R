@@ -51,10 +51,10 @@ fitnessGenotype2 <- function ( a_fitnic = NULL,
                               exp1 = NULL,
                               exp2 = NULL,
                               plot = TRUE,
-                              rho_param)
+                              rho_param = 0.8
+                              )
 {
   
-  print("github check")
   
   # to allow this function to be called with no args
   if ( is.null(a_fitnic) )
@@ -87,8 +87,8 @@ fitnessGenotype2 <- function ( a_fitnic = NULL,
 
   # Add "multiple feeds" and rho for testing
   # Rho pulled from argument
-  rho = rho_param
-  multiple_feeds = 1
+  
+  multiple_feeds = 0
   
   
   #testing
@@ -115,7 +115,7 @@ fitnessGenotype2 <- function ( a_fitnic = NULL,
         xx<- sum( a_expos[sex,,] * a_fitnic[locus1,locus2,,])
         
         # Reworked to ifelse() 
-        ifelse(multiple_feeds==0, a_fitgen[sex,locus1,locus2] <- xx, a_fitgen[sex,locus1,locus2] <- (xx*rho)/(1-xx*rho))
+        ifelse(multiple_feeds==0, a_fitgen[sex,locus1,locus2] <- xx, a_fitgen[sex,locus1,locus2] <-  ( ((xx*rho_param) / (1-xx*rho_param))) / (rho_param / (1 - rho_param)) )
         
         # To do: Error message? 
         
@@ -137,10 +137,10 @@ fitnessGenotype2 <- function ( a_fitnic = NULL,
   if (plot)
   {
     #transpose to get in useable format
-    df_fit3 <- as.data.frame(t(as.data.frame(a_fitgen)))
+    #df_fit3 <- as.data.frame(t(as.data.frame(a_fitgen)))
     # I could melt & then facet m&f
     # melt(df_fit3)
-    plot_fit_rs(df_fit3,'f',title='genotype dependent on exposure')
+    #plot_fit_rs(df_fit3,'f',title='genotype dependent on exposure')
   }
   
   return(a_fitgen)
